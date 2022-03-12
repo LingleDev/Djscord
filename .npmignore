@@ -1,0 +1,6 @@
+.gitignore
+.replit
+.config
+package-lock.json
+test
+replit.nix

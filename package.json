@@ -1,0 +1,30 @@
+{
+  "name": "djscord",
+  "version": "1.0.0",
+  "description": "A new, blazing fast implementation of the Discord API",
+  "main": "./src/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "nodejs16",
+    "api",
+    "bot",
+    "client",
+    "discordapp"
+  ],
+  "author": "LingleDev",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.6",
+    "ws": "^8.4.0"
+  },
+  "optionalDependencies": {
+    "@discordjs/opus": "^0.5.3",
+    "@discordjs/voice": "^0.7.5",
+    "ffmpeg-static": "^4.4.0",
+    "libsodium-wrappers": "^0.7.9"
+  }
+}
