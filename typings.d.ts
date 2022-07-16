@@ -1,7 +1,7 @@
 declare module "djscord" {
   import { EventEmitter } from "events"
   import { WebSocket } from "ws"
-  import * as DjsVoice from "@discordjs/voice"
+  // import * as DjsVoice from "@discordjs/voice"
 
   export class Client extends EventEmitter {
     token: string;
@@ -21,10 +21,10 @@ declare module "djscord" {
     rest: RESTManager;
     monitor: Monitor;
 
-    pings: array<number>;
+    pings: Array<number>;
     commands: SlashCommandInterface;
 
-    voice: DjsVoice;
+    voice: any;
 
     get ping(): number;
     get uptime(): number;
@@ -34,19 +34,19 @@ declare module "djscord" {
     public on<K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => void): this;
   }
 
-  private class SlashCommandInterface {
+  export class SlashCommandInterface {
     private client: Client;
     cache: ExtendoMap;
 
     register(command: object | SlashCommand): SlashCommand;
-    bulkRegister(commands: array<object | SlashCommand>): array<SlashCommand>
+    bulkRegister(commands: Array<object | SlashCommand>): Array<SlashCommand>
   }
 
-  private class Monitor {
+  export class Monitor {
 
   }
 
-  private class RESTManager {
+  class RESTManager {
     agent: string;
     client: Client;
     base: string;
@@ -58,12 +58,12 @@ declare module "djscord" {
     delete(url: string): Promise<object>;
   }
 
-  private class GateHandler {
+  class GateHandler {
     statusUpdate(status: string): void;
     presenceUpdate(presence: Presence): void;
   }
 
-  private class Snowflake {
+  class Snowflake {
 
   }
 
@@ -81,7 +81,7 @@ declare module "djscord" {
   export class Embed {
     title: string;
     description: string;
-    fields: array<object>;
+    fields: Array<object>;
     footer: object;
 
     parse(): object;
@@ -91,12 +91,21 @@ declare module "djscord" {
 
   }
 
+  export class Message {
+    id: string;
+    content: string;
+    author: User;
+
+    reply(payload: object|string|Embed): Promise<Message>;
+    delete(timeout: number): Promise<void>;
+  }
+
   export class Channel {
 
   }
 
   export class TextChannel extends Channel {
-
+    send(payload: object|string|Embed): Promise<Message>;
   }
 
   export class VoiceChannel extends Channel {
@@ -114,7 +123,7 @@ declare module "djscord" {
     discriminator: string;
     tag: string;
     bot: boolean;
-    flags: array<number>;
+    flags: Array<number>;
     status: string;
     presence: Presence;
     private client: Client;
@@ -127,8 +136,7 @@ declare module "djscord" {
     edit(payload: object): Promise<ClientUser>;
   }
 
-  export class ExtendoMap extends Map {
-
+  export class ExtendoMap
   }
 
   export interface Presence {
@@ -143,11 +151,11 @@ declare module "djscord" {
       interval: number,
       received: boolean,
       last: number,
-      startHeartbeat: function
+      startHeartbeat: Function
     }
   }
 
-  public enum DiscordEvent {
+  enum DiscordEvent {
 
   }
 
