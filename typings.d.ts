@@ -136,7 +136,7 @@ declare module "djscord" {
     edit(payload: object): Promise<ClientUser>;
   }
 
-  export class ExtendoMap
+  export class ExtendoMap {
   }
 
   export interface Presence {
