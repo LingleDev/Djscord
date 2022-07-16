@@ -11,7 +11,7 @@ class ClientUser {
 		this.tag = `${this.username}#${this.discriminator}`
 		this.bot = data.bot || true
 		this.flags = data.flags
-		this.system = data.system
+		this.system = data.system || false
 
 		this.status = "online"
 

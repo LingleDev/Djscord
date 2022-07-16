@@ -12,6 +12,7 @@ module.exports = class SlashCommandInterface {
 	}
 
 	/**
+	* Globally registers a Discord Slash Command 
 	* @param {Object|SlashCommand} obj A Discord Application Command object
 	* @returns {Promise<SlashCommand>} 
 	*/
@@ -19,10 +20,9 @@ module.exports = class SlashCommandInterface {
 		return new Promise((res,rej) => {
 			if (obj instanceof SlashCommand) obj = obj.parse()
 
-				
-					this.client.rest.post(`/applications/${this.client.user.id}/commands`, obj)
+			this.client.rest.post(`/applications/${this.client.user.id}/commands`, obj)
 			.then(slash => {
-				console.log(slash)
+				// console.log(slash)
 				var s = new SlashCommand(slash, this.client);
 
 				this.cache.set(s.id, s)

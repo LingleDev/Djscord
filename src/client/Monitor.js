@@ -1,4 +1,5 @@
 const { Gateway } = require('../util/Constants').ws.Close_Codes
+const GatewayError = require('../util/GatewayError')
 
 module.exports = (client) => {
 	client.ws.socket.on('error', (err) => {
@@ -9,9 +10,8 @@ module.exports = (client) => {
 		var codes = Object.values(Gateway)
 
 		if (codes.includes(code)) {
-			console.log(reason.toString('utf-8'))
-
-			// console.log(`Reconnecting...`);
+			console.error(new GatewayError(`The Discord gateway connection closed. Reason: ${reason.toString('utf-8')}`, code, reason.toString("utf-8")))
+			process.exit()
 		}
 	})
 }

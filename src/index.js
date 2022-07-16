@@ -5,5 +5,6 @@ module.exports = {
 	VoiceChannel: require('./structures/VoiceChannel'),
 	SlashCommand: require('./structures/SlashCommand'),
 	Embed: require('./structures/Embed'),
-	SlashCommandOption: require('./structures/SlashCommandOption')
+	SlashCommandOption: require('./structures/SlashCommandOption'),
+	Intent: require('./structures/Intent')
 }

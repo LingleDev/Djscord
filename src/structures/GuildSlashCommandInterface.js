@@ -10,6 +10,11 @@ class GuildSlashCommandInterface {
 		this.cache = new ExtendedMap()
 	}
 
+	/**
+	 * Registers a Discord Slash Command in the parent guild.
+	 * @param {Object|SlashCommand} obj 
+	 * @returns {Promise<SlashCommand>}
+	 */
 	register(obj) {
 		return new Promise((res, rej) => {
 			if (obj instanceof SlashCommand) obj = obj.parse();

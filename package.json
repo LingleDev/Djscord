@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "A new, blazing fast implementation of the Discord API",
   "main": "./src/index",
+  "use_api_version": 10,
+  "typings": "./typings.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

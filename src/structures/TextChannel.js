@@ -15,6 +15,11 @@ const Embed = require('./Embed')
 class TextChannel extends Channel {
 	constructor(data, client) {
 		super(data, client)
+
+		// this.client.rest.get(`/channels/${this.id}`)
+		// .then((channel) => {
+		// 	this.guild = this.client.guilds.get(channel.guild_id)
+		// })
 		
 	}
 
@@ -45,11 +50,13 @@ class TextChannel extends Channel {
 			} else if (typeof message === "object") { // MessagePayload
 				payload = message
 
-				payload.embeds.forEach((embed,i) => {
-					if (embed instanceof Embed) {
-						payload.embeds[i] = embed.parse()
-					}
-				})
+				if (typeof payload.embeds !== "undefined") {
+					payload.embeds.forEach((embed,i) => {
+						if (embed instanceof Embed) {
+							payload.embeds[i] = embed.parse()
+						}
+					})
+				}
 				
 			} else {
 				rej(new TypeError(`The type of the 'message' parameter was not a string nor an object`))
@@ -59,7 +66,7 @@ class TextChannel extends Channel {
 
 			this.client.rest.post(`/channels/${this.id}/messages`, payload)
 			.then(message => {
-				console.log(message)
+				// console.log(message)
 				var msg = new Message(message, this.client)
 				res(msg)
 			})

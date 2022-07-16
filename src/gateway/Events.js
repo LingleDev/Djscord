@@ -23,15 +23,24 @@ module.exports = {
 	ready: (data, client) => {
 		// console.log(data)
 		client.user = new ClientUser(data.user, client);
-		
-		for (var guild of data.guilds) {
-			client.guilds.set(guild.id, {
-				available: false
-			})
 
-		}
+		var guilds = data.guilds.length
+		var guilds_ready = 0;
 
-		client.emit("ready", client.user);
+		// var is_ready = false
+
+		client.on('guildCreate', () => {
+			guilds_ready++;
+			// console.log(guilds_ready)
+		})
+
+		var i = setInterval(() => {
+			if (guilds_ready == guilds) {
+				client.emit('ready')
+				// is_ready = true
+				clearInterval(i)
+			}
+		}, 1000)
 	},
 
 	/**
@@ -40,6 +49,24 @@ module.exports = {
 	*/
 	guildCreate: (data, client) => {
 		let guild = data
+
+		if (client.guilds.has(guild.id) && client.guilds.get(guild.id).available === false) {
+			// guild.members = members
+			// guild.channels = channels
+
+			guild.available = true;
+
+			var g = new Guild(guild, client)
+
+			client.guilds.set(guild.id, g);
+
+			client.emit("guildAvailable", g)
+		} else {
+			var g = new Guild(guild, client)
+			client.guilds.set(guild.id, g)
+
+			client.emit('guildCreate', g)
+		}
 
 		let channels = new ExtendedMap();
 		
@@ -59,6 +86,8 @@ module.exports = {
 					ch = new VoiceChannel(channel, client)
 				break;
 			}
+			
+			ch.guild = client.guilds.get(guild.id)
 
 			client.channels.set(channel.id, ch)
 			channels.set(channel.id, ch)
@@ -72,31 +101,15 @@ module.exports = {
 			members.set(member.user.id, new Member(member, client))
 
 		}
-
-		if (client.guilds.has(guild.id) && client.guilds.get(guild.id).available === false) {
-			// guild.members = members
-			// guild.channels = channels
-
-			guild.available = true;
-
-			var g = new Guild(guild, client)
-
-			client.guilds.set(guild.id, g);
-
-			client.emit("guildAvailable", g)
-		} else {
-			var g = new Guild(guild, client)
-			client.guilds.set(guild.id, g)
-
-			client.emit('guildCreate', g)
-		}
 		
 	},
 
 	messageCreate: (data, client) => {
-		var m = new Message(data, client);
+		var m = new Message(data, client)
 
-		// console.log("HELLO")
+		var channel = client.channels.get(m.channel.id)
+
+		// console.log(channel)
 
 		client.emit("messageCreate", m)
 

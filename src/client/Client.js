@@ -35,6 +35,8 @@ class Client extends EventEmitter {
 		this.rest = new REST(this)
 		this.monitor = require('./Monitor')
 
+		this.pings = []
+
 		this.commands = new SlashCommandInterface(this)
 
 		this.ws = {
@@ -57,17 +59,24 @@ class Client extends EventEmitter {
 		
 	}
 
+	get ping() {
+		return this.pings.reduce((prev, p) => prev + p, 0)/ this.pings.length
+	}
+
+	get uptime() {
+		return Date.now() - this.readyAt
+	}
+
 	/**
 	 * Starts the bot, and connects the Client to Discord.
 	 * @returns {Promise} {Promise}
 	 */
 	start(token = this.token) {
+		this.token = token
 		return new Promise(async (res,rej) => {
 			res(await Login(this))
 		})
 	}
-
-
 }
 
 module.exports = Client

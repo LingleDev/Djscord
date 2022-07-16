@@ -13,7 +13,7 @@ module.exports = class RESTManager {
 		this.client = client;
 		this.agent = `Djscord (v${version}, https://github.com/LingleDev/Djscord)`
 
-		this.base = `https://discord.com/api/v9`
+		this.base = `https://discord.com/api/v10`
 	}
 
 	get(url) {
@@ -48,7 +48,7 @@ module.exports = class RESTManager {
 	}
 
 	post(url, body) {
-		console.log(body)
+		// console.log(body)
 		return new Promise((resolve, reject) => {
 			fetch(this.base+url, {
 				method: "POST",

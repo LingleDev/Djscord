@@ -2,6 +2,7 @@
 
 class User {
 	constructor(data, client) {
+		// console.log(data)
 		
 		this.id = data.id
 		this.username = data.username

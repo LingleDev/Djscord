@@ -3,6 +3,7 @@ const WebSocket = require('ws')
 const { Gate_Codes } = require("../util/Constants").ws
 
 const getGatewayBot = require('../util/GetGatewayBot')
+const version = require('../../package.json').use_api_version
 
 module.exports = async (client) => {
 	var gate = await getGatewayBot(client);
@@ -17,7 +18,7 @@ module.exports = async (client) => {
 
 	// console.log(gate)
 	
-	const socket = new WebSocket(`${gate.url}/?v=10&encoding=json`)
+	const socket = new WebSocket(`${gate.url}/?v=${version}&encoding=json`)
 
 	client.ws.socket = socket
 
